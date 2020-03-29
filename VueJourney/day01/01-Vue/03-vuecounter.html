@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>hello vuejs</title>
+</head>
+
+<body>
+    <div id='app'>
+        <h2>当前计数：{{counter}}</h2>
+        <!-- <button v-on:click='increment'>+</button> -->
+        <button @click='increment'>+</button>
+        <!--@是一种语法糖-->
+        <button @click='decrement'>-</button>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data: {
+                counter: 0,
+            },
+            methods: {
+                increment() {
+                    console.log("counter被执行")
+                    this.counter++;//counter是app对象里面的属性，需要用this，this代表app对象
+                },
+                decrement() {
+                    this.counter--;
+                }
+            },
+            created: function () {
+                console.log("created")
+                //请求数据
+            },
+            mounted: function () {
+                console.log("mounted")
+            },
+            beforeCreate: function(){
+                console.log("beforeCreate")
+            }
+        });
+    </script>
+</body>
+
+</html>
