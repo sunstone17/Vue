@@ -1,35 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="utf-8" />
     <title>hello vuejs</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="app">
-        <h1>{{name}}</h1>
-        <h3>{{message}}</h3>
+      <h1>{{name}}</h1>
+      <h3>{{message}}</h3>
     </div>
 
     <script src="../js/vue.js"></script>
     <script>
-        //ES6语法：let(变量) const(常量)
-        //var 没有作用域的功能，有很多缺陷
-        let app = new Vue({
-            el: "#app",//挂载要管理的元素
-            data: {//定义数据
-                message: 'hello vuejs',
-                name: 'coder why'
-            }
-        });
-        //原生JS
-        // 1. 创建div，设置id属性
-        // 2. 定义变量message
-        // 3. 讲message放入div元素中
-        // 4. 修改message数据
-        // 5. 讲修改后的数据再次替换到div元素中
+      //ES6语法：let(变量) const(常量)
+      //var 没有作用域的功能，有很多缺陷
+      let app = new Vue({
+        el: "#app", //挂载要管理的元素
+        data: {
+          //定义数据
+          message: "hello vuejs",
+          name: "coder why"
+        }
+      });
+      //原生JS
+      // 1. 创建div，设置id属性
+      // 2. 定义变量message
+      // 3. 讲message放入div元素中
+      // 4. 修改message数据
+      // 5. 讲修改后的数据再次替换到div元素中
     </script>
-</body>
-
+  </body>
 </html>

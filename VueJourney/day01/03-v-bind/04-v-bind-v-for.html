@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello vuejs</title>
+    <style>
+      .active{
+        color: red;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app">
+      <ul>
+        <!--index是下标值-->
+        <li v-for="(item, index) in movies" :class="active(index)" @click='click(index)'>{{item}}</li>
+      </ul>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data: {
+          message: "你好啊",
+          movies: ["大时代", "摩登时代", "大上海", "速度激情"],
+          selectIndex: 0,
+        },
+        methods: {
+          active:function(index){
+            return  {'active':this.selectIndex == index};
+          },
+          click:function(index){
+            console.log(index);
+            this.selectIndex = index;
+          }
+        },
+      });
+    </script>
+  </body>
+</html>

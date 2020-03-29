@@ -1,26 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="utf-8" />
     <title>hello vuejs</title>
-</head>
+  </head>
 
-<body>
-    <div id='app'>
-        <ul>
-            <li v-for="item in movies">{{item}}</li>
-        </ul>
+  <body>
+    <div id="app">
+      <ul>
+        <li v-for="item in movies">{{item}}</li>
+      </ul>
     </div>
     <script src="../js/vue.js"></script>
     <script>
-        let app = new Vue({
-            el: "#app",
-            data: {
-                movies: ['海王', '花木兰', '星际穿越', '大话西游', '少年派']
-            }
-        })
+      let app = new Vue({
+        el: "#app",
+        data: {
+          movies: ["海王", "花木兰", "星际穿越", "大话西游", "少年派"]
+        }
+      });
     </script>
-</body>
-
+  </body>
 </html>
