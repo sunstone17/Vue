@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello vuejs</title>
+    <style>
+      .active {
+        color: red;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app">
+      <!-- <h2 class="active">{{message}}</h2> 
+      <h2 :class="active">{{message}}</h2>  -->
+      <h2 :class="{active: true, line: true}">{{message}}</h2>
+      <!--
+        固定的class会合并在一起
+        <h2 class="title" :class="{类名1: boolean, 类名2: boolean}">
+      -->
+      <h2 class="title" :class="{active: isActive, line: isLine}">
+        {{message}} isActive:{{isActive}}, isLine: {{isLine}}
+      </h2>
+      <!--对象语法绑定方法，方法后的小括号不能省略-->
+      <h2 class="title" :class="getClasses()">
+        {{message}} isActive:{{isActive}}, isLine: {{isLine}}
+      </h2>
+
+      <!--数组语法-->
+      <h2 class="title" :class="['active', 'line', activeFromServer]">
+        {{message}} isActive:{{isActive}}, isLine: {{isLine}}
+      </h2>
+
+      <h2 class="title" :class="getClassesV2()">
+        {{message}} isActive:{{isActive}}, isLine: {{isLine}}
+      </h2>
+
+      <button v-on:click='btnClick'>按钮</button>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data: {
+          message: "你好啊",
+          active: "active",
+          isActive: true,
+          isLine: true,
+          activeFromServer: 'aaaaa',
+        },
+        methods: {
+          btnClick: function() {
+            this.isActive = !this.isActive;
+          },
+          //对象语法
+          getClasses:function(){
+            return {'active': this.isActive, 'line': this.isLine}
+          },
+          //数组语法
+          getClassesV2: function(){
+            return [this.activeFromServer, this.active, 'line']
+          }
+          
+        }
+      });
+    </script>
+  </body>
+</html>

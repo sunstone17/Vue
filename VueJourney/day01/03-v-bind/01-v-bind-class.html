@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello vuejs</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <!-- <img src = '{{imgUrl}}'/> 错误 -->
+      <img v-bind:src="imgUrl"/>
+      <a v-bind:href="baidu">百度一下</a>
+      <!--语法糖写法-->
+      <img :src="imgUrl"/>
+      <a :href="baidu">百度一下</a>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+      const app = new Vue({
+        el: '#app',
+        data:{
+            message: '你好啊',
+            imgUrl:'https://img11.360buyimg.com/mobilecms/s280x280_jfs/t1/90837/16/13963/252312/5e606c96E93842336/536c571b444a29d0.jpg.webp',
+            baidu: 'https://www.baidu.com'
+        }
+      });
+    </script>
+  </body>
+</html>

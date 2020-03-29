@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello vuejs</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <h2>{{message}}</h2>
+      <h2>{{message}}, Stone</h2>
+      <!--mustache中可以写简单的表达式，很多种写法-->
+      <h2>{{firstName + ' ' + lastName}}</h2>
+      <h2>{{firstName}}^7,_%{{lastName}}</h2>
+      <h2>{{counter * 2}}</h2>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data: {
+          message: "你好啊",
+          firstName: "kobe",
+          lastName: "beyond",
+          counter: 100,
+        }
+      });
+    </script>
+  </body>
+</html>
