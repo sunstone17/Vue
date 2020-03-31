@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello vuejs</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <!-- <h2 :style="{key(属性名)： value:（属性值）}">{{message}}</h2>
+      style中 key 可以不加单引号，value一定要加单引号 , 否则是当作变量解析的-->
+      <h2 :style="{'font-size': '50px'}">{{message}}</h2>
+      <!--finalSize 当作变量解析-->
+      <h2
+        :style="{'font-size': finalSize + 'px', 'background-color': finalColor}"
+      >
+        {{message}}
+      </h2>
+      <h2 :style="getStyles()">{{message}}</h2>
+      <!--数组语法-->
+      <h2 :style="[baseStyle]">{{message}}</h2>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data: {
+          message: "你好啊",
+          finalSize: 100,
+          finalColor: "red",
+          baseStyle: { backgroundColor: "red" }
+        },
+        methods: {
+          getStyles: function() {
+            return {
+              "font-size": this.finalSize + "px",
+              "background-color": this.finalColor
+            };
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
