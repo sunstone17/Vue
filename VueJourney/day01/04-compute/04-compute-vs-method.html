@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello vuejs</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <!--1. mustache语法，过于繁琐-->
+      <h2>{{firstName}} {{lastName}}</h2>
+      <!--2. methods, 多次执行-->
+      <h2>methods {{getFullName()}}</h2>
+      <h2>methods {{getFullName()}}</h2>
+      <h2>methods {{getFullName()}}</h2>
+      <h2>methods {{getFullName()}}</h2>
+      <h2>methods {{getFullName()}}</h2>
+      <!--3. Computed， 就执行一次-->
+      <h2>{{fullName}}</h2>
+      <h2>{{fullName}}</h2>
+      <h2>{{fullName}}</h2>
+      <h2>{{fullName}}</h2>
+      <h2>{{fullName}}</h2>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data: {
+          message: "你好啊",
+          firstName: 'Stone',
+          lastName: 'Sun'
+        },
+        computed:{
+          //计算熟悉一般没有set方法，只有get方法
+          //Vue内部对firstName进行监听，fullName存在缓存
+          //复杂计算的话，多次调用时，效率比较高
+          fullName: function(){
+            console.log("fullName")
+            return this.firstName + ' ' + this.lastName
+          }
+        },
+        methods: {
+          getFullName: function(){
+            console.log("getFullName")
+            return this.firstName + ' ' + this.lastName + ' methods'
+          }
+        },
+      });
+    </script>
+  </body>
+</html>
