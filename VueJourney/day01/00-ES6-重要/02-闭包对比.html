@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello vuejs</title>
+  </head>
+
+  <body>
+    <div>
+      <button>按钮</button>
+      <button>按钮</button>
+      <button>按钮</button>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+      //第一种方式 情况1，es5中没有使用闭包，错误的方法
+      var btns = document.getElementsByTagName("button");
+      for (let i = 0; i < btns.length; i++) {
+        btns[i].addEventListener("click", function() {
+          i;
+          console.log("第" + i + "个按钮");
+        });
+      }
+
+      //1, 情况1，es5中没有使用闭包，错误的方法
+      i = 3
+      {
+        //第一次
+        btns[i].addEventListener("click", function() {
+          i;
+          console.log("第" + i + "个按钮");
+        });
+      }
+
+      {
+        //第二次  i时没有作用域的
+        btns[i].addEventListener("click", function() {
+          i;
+          console.log("第" + i + "个按钮");
+        });
+      }
+
+      {
+        //第三次
+        btns[i].addEventListener("click", function() {
+          i;
+          console.log("第" + i + "个按钮");
+        });
+      }
+
+//===============================================================
+      //ES5第二种方式 ES5中使用闭包，函数作用域
+      var btns = document.getElementsBiyTagName("button");
+      for (var i = 0; i < btns.length; i++) {
+        (function(i) {
+          //立即调用
+          btns[i].addEventListener("click", function() {
+            i;
+            console.log("第" + i + "个按钮");
+          });
+        })(i);
+      }
+      //2 ES5中使用闭包，函数作用域
+      (function(i) {
+        //立即调用
+        btns[i].addEventListener("click", function() {
+          i;
+          console.log("第" + i + "个按钮");
+        });
+      })(0);
+
+      (function(i) {
+        //立即调用
+        btns[i].addEventListener("click", function() {
+          i;
+          console.log("第" + i + "个按钮");
+        });
+      })(1);
+
+      (function(i) {
+        //立即调用
+        btns[i].addEventListener("click", function() {
+          i;
+          console.log("第" + i + "个按钮");
+        });
+      })(3);
+
+//===============================================================
+      var btns = document.getElementsByTagName('button');
+      for(let i =0 ; i< btns.length ; i++){
+          btns[i].addEventListener('click', function(){i //这里的函数时回调的
+          console.log('第' + i + '个按钮')
+          })
+      }
+
+      i = 3 //i不会覆盖块级作用域的i
+      {//ES6中大括号有自己的作用域，通过let的获取的
+          i = 0
+          btns[i].addEventListener('click', function(){i //这里的函数时回调的
+          console.log('第' + i + '个按钮')
+          })
+      }
+      {
+          i = 1
+          btns[i].addEventListener('click', function(){i //这里的函数时回调的
+          console.log('第' + i + '个按钮')
+          })
+      }
+    </script>
+  </body>
+</html>

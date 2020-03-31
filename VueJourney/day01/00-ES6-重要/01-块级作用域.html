@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello vuejs</title>
+  </head>
+
+  <body>
+    <div>
+      <button>按钮</button>
+      <button>按钮</button>
+      <button>按钮</button>
+      <button>按钮</button>
+      <button>按钮</button>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+      // ES5中的var没有块级作用域（if/for）
+      // ES6中的let是有块级作用域的（if/for）
+      // ES5之前应为if和for都没有块级作用域的概念，所以在很多时候，我们都必须借助于function的作用域来解决引用外面变量的问题
+      // ES6中加入了let，let是if和for有了块级作用域
+
+      //1. 变量作用域
+      // {
+      //   var name = "why";
+      //   console.log(name);
+      // }
+      // console.log(name)
+      //2. 没有块级作用域引起的问题, if的块级
+      // var func;
+      // if(true){
+      //   var name = "why";
+      //   let sex = 'male'
+      //   func = function(){
+      //     //name没有块级作用域，可能被别人修改，这里就打不出来了
+      //     console.log(name) //kobe
+      //     console.log(sex)  //male
+      //   }
+      // }
+      // sex = 'email'
+      // name = 'kobe'
+      // func()
+
+      //3. 没有块级作用域引起的问题, for的块级
+      // var btns = document.getElementsByTagName('button');
+      // for(var i =0 ; i< btns.length ; i++){
+      //   btns[i].addEventListener('click', function(){
+      //     console.log('第' + i + '个按钮')  //5
+      //   })
+      // }
+      //解决办法：加一个闭包
+      //为什么闭包可以解决这个问题：函数是有块级作用域，i传进去之后，不会被改变
+      // var btns = document.getElementsBiyTagName('button');
+      // for(var i =0 ; i< btns.length ; i++){
+      //   (function(i){//立即调用
+      //     btns[i].addEventListener('click', function(){i
+      //     console.log('第' + i + '个按钮')
+      //     })
+      //   })(i)
+      // }
+
+      var btns = document.getElementsByTagName('button');
+      for(let i =0 ; i< btns.length ; i++){
+          btns[i].addEventListener('click', function(){i //这里的函数时回调的
+          console.log('第' + i + '个按钮')
+          })
+      }
+
+      //函数是一个作用域的理解
+      var name = 'kobe'
+      function abc(name){
+        console.log(name);//这里name有自己的作用域，不会被外面的name影响
+      }
+      setTimeout(function(){abc(name);}, 2000); //why
+      name = 'why'
+    </script>
+  </body>
+</html>
