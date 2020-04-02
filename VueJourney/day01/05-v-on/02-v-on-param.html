@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello vuejs</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <!--不带括号-->
+      <button @click='btn1Click'>按钮1</button>
+      <!--不带括号-->
+      <button @click='btn1Click()'>按钮1</button>
+      <!--不带括号-->
+      <!--传入$event-->
+      <button @click='btn2Click'>按钮2</button>
+      <!--不传参数，参数为undefined-->
+      <button @click='btn2Click()'>按钮2</button>
+      <!--不传参数，参数为123-->
+      <button @click='btn2Click(123)'>按钮2</button>
+      <!--不传参数，第一个参数为$event, 第二个为undefined-->
+      <button @click='btn3Click'>按钮3</button>
+      <!--传123，undefined-->
+      <button @click='btn3Click(123)'>按钮3</button>
+      <!--传123，$event-->
+      <button @click='btn3Click(123, $event)'>按钮3</button>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data: {
+          message: "你好啊",
+        },
+        methods: {
+          btn1Click(){
+            console.log("btn1Click")
+          },
+          btn2Click(abc){
+            console.log("btn2Click", abc)
+          },
+          btn3Click(abc, event){
+            console.log("btn3Click", abc, event)
+          }
+        },
+      });
+    </script>
+  </body>
+</html>
