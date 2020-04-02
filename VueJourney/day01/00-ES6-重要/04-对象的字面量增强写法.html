@@ -11,11 +11,34 @@
     <script src="../js/vue.js"></script>
     <script>
       const obj2 = new Object()
-      const obj = {//字面量写法
-        name = 'age',
-
+      //字面量写法，增强写法
+      const obj = {
+        name: 'age',
+        age: 18,
+        run: function(){
+          console.log('run')
+        },
+        eat: function(){
+          console.log('eat')
+        }
       } 
-      // 1.
+
+      let name = 'name';
+      let age = 18;
+      // 1.ES6的属性增强写法
+      // 2. typescript有类型检测
+      const obj3 = {
+        name,
+        age,
+        run(){
+
+        },
+        eat(){
+          console.log('eat')
+        }
+      }
+      console.log(obj3)
+      obj3.eat()
     </script>
   </body>
 </html>
