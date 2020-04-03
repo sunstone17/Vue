@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello vuejs</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <div v-if="books.length > 0">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>书籍名称</th>
+              <th>出版日期</th>
+              <th>价格</th>
+              <th>购买数量</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr v-for="(item, index) in books">
+              <th>{{item.id}}</th>
+              <th>{{item.name}}</th>
+              <th>{{item.date}}</th>
+              <th>{{item.price | showPrice}}</th>
+              <th>
+                <button @click="increment(item)">+</button>
+                {{item.count}}
+                <button
+                  @click="decrement(item)"
+                  v-bind:disabled="item.count <= 1"
+                >
+                  -
+                </button>
+              </th>
+              <th>
+                <button @click="remove(index)">移除</button>
+              </th>
+            </tr>
+          </tbody>
+        </table>
+        总价格：{{totalPrice | showPrice}}
+      </div>
+      <div v-else>
+        当前购物车没有书籍
+      </div>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data: {
+          books: [
+            {
+              id: 1,
+              name: "《算法导论》",
+              date: "2020-9",
+              price: 100.0,
+              count: 1
+            },
+            {
+              id: 2,
+              name: "《算法导论2》",
+              date: "2020-3",
+              price: 89.0,
+              count: 1
+            },
+            {
+              id: 3,
+              name: "《算法导论3》",
+              date: "2020-4",
+              price: 78.0,
+              count: 1
+            },
+            {
+              id: 4,
+              name: "《算法导论4》",
+              date: "2020-1",
+              price: 89.0,
+              count: 1
+            }
+          ]
+        },
+        methods: {
+          increment(book) {
+            book.count++;
+          },
+          decrement(book) {
+            book.count--;
+          },
+          remove(index) {
+            this.books.splice(index, 1);
+          }
+        },
+        computed: {
+          totalPrice() {
+
+            // for let in
+            for(let i in this.books){
+              console.log( 'in', i)
+            }
+
+            //for let of
+            for(let item of this.books){
+              console.log('of', item)
+            }
+            return this.books.reduce(function(pre, item) {
+              return pre + item.price * item.count;
+            }, 0);
+          }
+        },
+        //过滤器，会将参数传入
+        filters: {
+          showPrice(price) {
+            return "￥" + price.toFixed(2);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

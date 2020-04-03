@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello vuejs</title>
+  </head>
+
+  <body>
+    <div id="app"></div>
+    <script src="../js/vue.js"></script>
+    <script>
+      let nums = [10, 20, 50, 100, 101, 320, 202, 898];
+
+      let total = nums
+        .filter(x => x > 100)
+        .map(m => m * 2)
+        .reduce(function(pre, value) {
+          return pre + value;
+        }, 0);
+      console.log(total);
+
+      let total2 = nums
+        .filter(function(x) {
+          return x > 100;
+        })
+        .map(function(value) {
+          return value * 2;
+        })
+        .reduce(function(pre, value) {
+          return pre + value;
+        }, 0);
+      console.log(total2);
+
+      const array1 = [1, 2, 3, 4];
+      const reducer = (accumulator, currentValue) => accumulator + currentValue;
+
+      // 1 + 2 + 3 + 4
+      console.log(array1.reduce(reducer));
+      // expected output: 10
+
+      // 5 + 1 + 2 + 3 + 4
+      console.log(array1.reduce(reducer, 5));
+      // expected output: 15
+    </script>
+  </body>
+</html>

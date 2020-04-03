@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello vuejs</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <!--1. v-for不带key-->
+      <ul>
+        <li v-for="item in letters">{{item}}</li>
+      </ul>
+
+      <!--2. v-for带key, 保证key唯一，当前行不变化
+        不要使用index，插入之后，index和item对应关系发生变化
+        可以在elements中看出来变化过程
+        为什么时这样，
+        和Vue内部使用的diff算法相关
+      -->
+      <ul>
+        <li v-for="(item, index) in letters" :key='item'>{{item}}</li>
+      </ul>
+      <button @click='change'>change</button>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data: {
+          message: "你好啊",
+          letters:['A', 'B','C','D','E']
+        },
+        methods: {
+          change(){
+            this.letters.splice(2, 0, 'F');
+          }
+        },
+      });
+    </script>
+  </body>
+</html>

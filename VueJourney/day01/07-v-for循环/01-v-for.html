@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello vuejs</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <!--1. 遍历数组-->
+      <ul>
+        <li v-for='item in movies'>{{item}}</li>
+      </ul>
+
+      <!--2. 遍历数组, 添加下标-->
+      <ul>
+        <li v-for='(item, index) in movies'>{{index+1}}.{{item}}</li>
+      </ul>
+
+      <!--3. 遍历属性, 以及key-->
+      <ul>
+        <li v-for='(value, key) in info'>{{value}}: {{key}}</li>
+      </ul>
+       <!--4. 遍历属性, 以及key, index-->
+       <ul>
+        <li v-for='(value, key, index) in info'>{{value}}: {{key}}, {{index}}</li>
+      </ul>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data: {
+          message: "你好啊",
+          movies:['天幕','降临','大圣','来了'],
+          info:{
+            age:19,
+            name:'hehe',
+            height:1.88
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

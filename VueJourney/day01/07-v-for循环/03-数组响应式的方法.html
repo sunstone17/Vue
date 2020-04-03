@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello vuejs</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <ul>
+        <li v-for="item in letters">{{item}}</li>
+      </ul>
+      <button @click='push'>push</button>
+      <button @click='pop'>pop</button>
+      <button @click='shift'>shift</button>
+      <button @click='unshift'>unshift</button>
+      <button @click='splice'>splice</button>
+      <button @click='sort'>sort</button>
+      <button @click='reverse'>reverse</button>
+      <button @click='index'>index not work</button>
+      <button @click='noChange'>noChange</button>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data: {
+          message: "你好啊",
+          letters: ["a", "b", "c", "d", "e"]
+        },
+        methods: {
+          change() {
+            this.letters.splice(2, 0, "F");
+          },
+          index() {
+            this.letters[0] = 'index';
+          },
+          noChange() {
+            this.letters = this.letters;
+          },
+          //尾部添加
+          push() {
+            this.letters.push('push a', 'push b')
+          },
+          //移除最后一个
+          pop() {
+            this.letters.pop();
+          },
+          //移除第一个
+          shift() {
+            this.letters.shift()
+          },
+          //头部添加
+          unshift() {
+            this.letters.unshift('unshift a', 'unshift b');
+          },
+          //从指定位置start删除n个元素，并可以添加指定元素
+          //替换元素使用
+          splice() {
+            this.letters.splice(2,2, 'splice a', 'splice b');
+          },
+          //正序
+          sort() {
+            this.letters.sort()
+          },
+          //倒叙
+          reverse() {
+            this.letters.reverse()
+          },
+          vueSet(){
+            Vue.set(this.letters, 2, 'vueset 2')
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
