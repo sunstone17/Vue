@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello vuejs</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <!--v-model可以是radio直接互斥，不用添加name属性-->
+      <label for="license">
+        <input id="license" type="checkbox" v-model="isAgree" />同意协议
+      </label>
+      <h2>{{isAgree}}</h2>
+
+      <br />
+
+      <input type="checkbox" value="唱歌" v-model='hobbies'>唱歌
+      <input type="checkbox" value="跳舞" v-model='hobbies'>跳舞
+      <input type="checkbox" value="飞行" v-model='hobbies'>飞行
+      <input type="checkbox" value="旅游" v-model='hobbies'>旅游
+      <h2>{{hobbies}}</h2>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data: {
+          isAgree: false,
+          hobbies:[]
+        }
+      });
+    </script>
+  </body>
+</html>

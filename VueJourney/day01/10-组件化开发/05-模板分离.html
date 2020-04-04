@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello vuejs</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <!--使用组件-->
+      <!-- <cpn1></cpn1> -->
+      <cpn2></cpn2>
+    </div>
+    <script src="../js/vue.js"></script>
+
+    <!--使用script标签，但是type必须是text/x-template-->
+    <script type="text/x-template" id="template_cpn1">
+      <div>
+        <h2>我是标题1</h2>
+        <p>我是内容哈哈哈哈</p>
+      </div>
+    </script>
+
+    <!--使用template标签-->
+    <template id="template_cpn2">
+      <div>
+        <h2>我是标题2</h2>
+        <p>我是内容呵呵呵2</p>
+        <cpn1></cpn1>
+      </div>
+    </template>
+    <script>
+      //全局注册组件语法糖
+      // Vue.component("cpn1", {
+      //   template: "#template_cpn1"
+      // });
+
+      //Vue实例可以当作root组件
+      const app = new Vue({
+        el: "#app",
+        data: {
+          message: "你好啊"
+        },
+        components: {
+          cpn2: {//局部组件注册语法糖
+            template: "#template_cpn2",
+            components: {
+              cpn1: Vue.extend({ template: "#template_cpn1" }) //子组件
+            }
+          } 
+        }
+      });
+    </script>
+  </body>
+</html>

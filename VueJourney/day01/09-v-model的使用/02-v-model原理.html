@@ -7,7 +7,9 @@
 
   <body>
     <div id="app">
-      <input type='text' v-model='message'>
+      <!-- <input type='text' v-model='message'> -->
+      <input type='text' :value='message' @input='change'>
+      <br />
       {{message}}
     </div>
     <script src="../js/vue.js"></script>
@@ -16,7 +18,13 @@
         el: "#app",
         data: {
           message: "你好啊"
-        }
+        },
+        methods: {
+          change(event){
+            console.log(event)
+            this.message = event.target.value;
+          }
+        },
       });
     </script>
   </body>

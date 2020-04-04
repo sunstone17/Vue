@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello vuejs</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <div>
+        不关联的组件
+        <cpn1></cpn1>
+        <cpn1></cpn1>
+        <cpn1></cpn1>
+      </div>
+      <div>
+        关联的组件
+        <cpn2></cpn2>
+        <cpn2></cpn2>
+        <cpn2></cpn2>
+      </div>
+    </div>
+    <!--使用template标签-->
+    <template id="template_cpn1">
+      <div>
+        计数：{{counter}}
+        <br />
+        <button @click="increment">+</button>
+        <button @click="decrement">-</button>
+      </div>
+    </template>
+    <script src='../js/vue.js'></script>
+    <script>
+      //全局注册组件语法糖
+      Vue.component("cpn1", {
+        template: "#template_cpn1",
+        data() {
+          return {
+            counter: 0
+          };
+        },
+        methods: {
+          increment() {
+            this.counter++;
+          },
+          decrement() {
+            this.counter--;
+          }
+        }
+      });
+
+      const obj ={
+        counter:0
+      }
+      Vue.component("cpn2", {
+        template: "#template_cpn1",
+        data() {
+          return obj;
+        },
+        methods: {
+          increment() {
+            this.counter++;
+          },
+          decrement() {
+            this.counter--;
+          }
+        }
+      });
+
+      //Vue实例可以当作root组件
+      const app = new Vue({
+        el: "#app",
+        data: {
+          message: "你好啊"
+        },
+      });
+    </script>
+  </body>
+</html>

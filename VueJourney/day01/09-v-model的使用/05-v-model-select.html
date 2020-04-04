@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello vuejs</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <select v-model="fruit">
+        <option value="草莓">草莓</option>
+        <option value="榴莲">榴莲</option>
+        <option value="香蕉">香蕉</option>
+        <option value="苹果">苹果</option>
+        <option value="橘子">橘子</option>
+      </select>
+      <br />
+      <h2>水果: {{fruit}}</h2>
+
+      <select v-model="fruits" multiple>
+        <option value="草莓">草莓</option>
+        <option value="榴莲">榴莲</option>
+        <option value="香蕉">香蕉</option>
+        <option value="苹果">苹果</option>
+        <option value="橘子">橘子</option>
+      </select>
+      <br />
+      <h2>水果: {{fruits}}</h2>
+
+      <!--值绑定-->
+      <label v-for="item in initFruits" :for="item">
+        <input type="checkbox" :value="item" :id='item' v-model="fruits" />{{item}}
+      </label>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data: {
+          fruit: "",
+          fruits: [],
+          initFruits: ["草莓", "榴莲", "苹果", "橘子", "香蕉"]
+        }
+      });
+    </script>
+  </body>
+</html>
