@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello vuejs</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <cpn v-show="isShow"></cpn>
+    </div>
+    <template id="cpn">
+      <div>
+        <p>我是一个子组件</p>
+        <p v-show="isShow">是否展示</p>
+        <slot><span>默认</span></slot>
+      </div>
+    </template>
+    <script src="../js/vue.js"></script>
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data: {
+          message: "你好啊",
+          isShow: true
+        },
+
+        components: {
+          cpn: {
+            template: "#cpn",
+            data() {
+              return {
+                isShow: false
+              };
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

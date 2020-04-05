@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello vuejs</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <cpn></cpn>
+    </div>
+
+    <template id="cpn">
+      <div>
+        <div>{{name}}</div>
+        <ccpn></ccpn>
+      </div>
+    </template>
+
+    <template id="ccpn">
+      <div>
+        <div>{{name}}</div>
+        <button @click='showMessage'>ccpn</button>
+      </div>
+    </template>
+
+    <script src="../js/vue.js"></script>
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data:{
+          name: '我是一个vue实例'
+        },
+        components: {
+          cpn: {//子组件
+            template: "#cpn",
+            data() {
+              return {
+                name: "我是一个子组件cpn"
+              };
+            },
+            methods: {
+              showMessage() {
+                console.log("showMessage");
+              }
+            },
+            components:{
+              ccpn:{//子组件
+                template:'#ccpn',
+                data(){
+                  return{
+                    name:'我是一个子组件ccpn'
+                  }
+                },
+                methods: {
+                  showMessage(){
+                    //查看父组  $parent
+                    console.log(this.$parent)
+                    console.log(this.$parent.name)
+                    //查看      $root
+                    console.log(this.$root)
+                    console.log(this.$root.name)
+                  }
+                },
+              }
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

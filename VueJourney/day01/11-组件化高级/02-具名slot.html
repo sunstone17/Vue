@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello vuejs</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <label>
+        原始
+        <cpn></cpn>
+      </label>
+      <br />
+      <label>
+        替换左边
+        <cpn>
+          <button slot="left">按钮在左边</button>
+        </cpn>
+      </label>
+      <br />
+      <label>
+        替换中间
+        <cpn>
+          <h2 slot="center">在中间</h2>
+        </cpn>
+      </label>
+
+      <br />
+      <label>
+        替换默认
+        <cpn>
+          <h2>替换默认</h2>
+        </cpn>
+      </label>
+    </div>
+    <template id="cpn">
+      <div>
+        <slot name="left"><span>左边</span></slot>
+        <slot name="center"><span>右边</span></slot>
+        <slot name="right"><span>中间</span></slot>
+        <slot><span>默认</span></slot>
+      </div>
+    </template>
+    <script src="../js/vue.js"></script>
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data: {
+          message: "你好啊"
+        },
+        components: {
+          cpn: {
+            template: "#cpn"
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

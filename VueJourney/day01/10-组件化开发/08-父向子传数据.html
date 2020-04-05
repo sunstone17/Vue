@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello vuejs</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <!--传入的是message， movies-->
+      <cpn cmessage="message" cmovies="movies"></cpn>
+      <!--传递数据时，必须用v-bind，这样能够找到变量-->
+      <cpn :cmessage="message" :cmovies="movies"></cpn>
+      <cpn :cmessage="123123" :cmovies="movies"></cpn>
+      <cpn :cmovies="movies"></cpn>
+    </div>
+
+    <template id="cpn">
+      <div>
+        ======================
+        <ul>
+          <li v-for="item in cmovies">{{item}}</li>
+        </ul>
+        <h2>{{cmessage}}</h2>
+      </div>
+    </template>
+    <script src="../js/vue.js"></script>
+    <script>
+      const cpn = {
+        template: "#cpn",
+        data() {
+          return {
+            cmessage: "",
+            cmovies: []
+          };
+        },
+        props: {
+          cmessage: {
+            type: [Number, String], //可以是多个类型时
+            default: "~~",
+            required: true
+          },
+          cmovies:{
+            type: Array,
+            default(){//必须是函数，否则会报错
+              return []
+            },
+            required: false
+          }
+        }
+      };
+
+      const app = new Vue({
+        el: "#app",
+        data: {
+          message: "你好啊",
+          movies: ["海王", "猎场", "绅士们"]
+        },
+        components: {
+          cpn
+        }
+      });
+    </script>
+  </body>
+</html>
