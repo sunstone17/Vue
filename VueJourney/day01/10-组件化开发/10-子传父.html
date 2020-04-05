@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello vuejs</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <cpn :subcategories="categories" @itemclick='cpnClick'></cpn>
+    </div>
+
+    <template id="cpn">
+      <div>
+        <button v-for="item in subcategories" @click='btnClick(item)'>{{item}}</button>
+      </div>
+    </template>
+    <script src="../js/vue.js"></script>
+    <script>
+      const cpn = {
+        template: "#cpn",
+        props: {
+          subcategories: {
+            type: Array,
+            default() {
+              //必须是函数，否则会报错
+              return [];
+            },
+            required: false
+          }
+        },
+        methods: {
+          btnClick(item){
+            this.$emit('itemclick', item)
+          }
+        },
+      };
+
+      const app = new Vue({
+        el: "#app",
+        data: {
+          categories: ["电脑", "手机", "衣服"]
+        },
+        methods:{
+          cpnClick(item){
+            console.log('cpn click', item)
+          }
+        },
+        components: {
+          cpn
+        }
+      });
+    </script>
+  </body>
+</html>
