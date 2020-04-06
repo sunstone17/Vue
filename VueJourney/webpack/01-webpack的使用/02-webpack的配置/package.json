@@ -1,0 +1,16 @@
+{
+  "name": "meetvue",
+  "version": "1.0.0",
+  "description": "this is a demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"this is a demo\"",
+    "build": "webpack"
+  },
+  "author": "sun, stone",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  }
+}
