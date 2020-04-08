@@ -1,4 +1,6 @@
 const path = require("path");
+const { VueLoaderPlugin } = require("vue-loader");
+const webpack = require('webpack')
 
 module.exports = {
   entry: "./src/main.js",
@@ -52,6 +54,10 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.vue$/,
+        use: ["vue-loader"],
+      },
     ],
   },
   resolve: {
@@ -59,4 +65,6 @@ module.exports = {
       vue$: "vue/dist/vue.esm.js",
     },
   },
+  plugins: [new VueLoaderPlugin(),
+    new webpack.BannerPlugin("版权归Stone Sun所有")],
 };
