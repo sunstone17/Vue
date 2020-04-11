@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello vuejs</title>
+  </head>
+
+  <body>
+    <script>
+      //1. 一个参数
+      const sum = (x) => console.log(x);
+      sum(10);
+      const sum2 = (x) => console.log(x);
+      sum2(20);
+      const sum3 = (x) => {
+        console.log(x);
+      };
+      sum3(30);
+
+      //2. 没有参数
+      const power = () => console.log("没有参数");
+      power();
+
+      //3. 2个参数
+      const mul = (x, y) => console.log(x * y);
+      mul(10, 20);
+      //3.1 多行代码
+      const mul2 = (x, y) => {
+        let z = x * y;
+        console.log(z)
+      }
+      mul2(10, 20)
+    </script>
+  </body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello vuejs</title>
+  </head>
+
+  <body>
+    <script>
+      //箭头函数中的this引用的是向外层作用域中，一层层查找，直到找到有this的定义
+      setTimeout(function () {
+        console.log(this); //window
+      }, 1000);
+
+      setTimeout(() => {
+        console.log(this); //window
+      }, 1000);
+
+      const obj = {
+        aaa() {
+          setTimeout(function () {
+            console.log(this); //window
+          }, 1000);
+
+          setTimeout(() => {
+            console.log(this); //obj
+          }, 1000);
+        },
+        bbb() {
+          setTimeout(() => {
+            setTimeout(function () {
+              console.log(this); //window
+            }, 1000);
+
+            setTimeout(() => {
+              console.log(this); //obj
+            }, 1000);
+          }, 1000);
+
+          setTimeout(function () {
+            setTimeout(function () {
+              console.log(this); //window
+            }, 1000);
+
+            setTimeout(() => {
+              console.log(this); //window
+            }, 1000);
+          }, 1000);
+        },
+      };
+
+      obj.aaa();
+      obj.bbb();
+    </script>
+  </body>
+</html>
