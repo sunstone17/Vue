@@ -10,7 +10,24 @@
 
 <script>
 export default {
-  name: "Home"
+  name: "Home",
+  activated() {
+    console.log("home activated");
+  },
+  deactivated() {
+    console.log("home deactivated");
+  },
+  created() {
+    console.log("home created");
+  },
+  destroyed() {
+    console.log("home destroyed");
+  },
+  beforeRouteEnter (to, from, next) {
+    // ...
+    console.log('home beforeRouteEnter', to.fullPath)
+    next()
+  }
 };
 </script>
 

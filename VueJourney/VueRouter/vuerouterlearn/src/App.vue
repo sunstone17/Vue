@@ -7,9 +7,19 @@
     <router-link to="/home" tag="button">首页</router-link>
     <router-link to="/about" tag="button">关于</router-link>
     <router-link :to="'/user/'+userId" tag="button">用户</router-link>
+    <router-link
+      :to="{path: '/profile', query:{
+      age:19, height: 1.88, name:'sgj'
+    }}"
+      tag="button"
+    >档案</router-link>
+
+    <!-- <button @click="profileClick">用户2</button> -->
     <!-- <button @click="homeClick">首页</button>
     <button @click="aboutClick">关于</button>-->
-    <router-view></router-view>
+    <keep-alive exclude="profile">
+      <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 
@@ -32,6 +42,16 @@ export default {
       // this.$router.push('/about')
       //replace => replaceState
       this.$router.replace("/about");
+    },
+    profileClick() {
+      this.$router.push({
+        path: "/profile",
+        query: {
+          age: 19,
+          height: 1.88,
+          name: "sgj"
+        }
+      });
     }
   }
 };
