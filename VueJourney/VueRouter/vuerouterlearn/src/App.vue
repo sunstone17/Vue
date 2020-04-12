@@ -3,11 +3,12 @@
     <h2>哈哈哈</h2>
     <!--tag replace active-->
     <!-- <router-link to="/home" tag="button" replace active-class='active'>首页</router-link>
-    <router-link to="/about" tag="button" replace active-class='active'>关于</router-link> -->
-    <!-- <router-link to="/home" tag="button" replace>首页</router-link>
-    <router-link to="/about" tag="button" replace>关于</router-link> -->
-    <button @click="homeClick">首页</button>
-    <button @click="aboutClick">关于</button>
+    <router-link to="/about" tag="button" replace active-class='active'>关于</router-link>-->
+    <router-link to="/home" tag="button">首页</router-link>
+    <router-link to="/about" tag="button">关于</router-link>
+    <router-link :to="'/user/'+userId" tag="button">用户</router-link>
+    <!-- <button @click="homeClick">首页</button>
+    <button @click="aboutClick">关于</button>-->
     <router-view></router-view>
   </div>
 </template>
@@ -15,20 +16,24 @@
 <script>
 export default {
   name: "App",
+  data() {
+    return {
+      userId: "zhangsan"
+    };
+  },
   methods: {
-    homeClick(){
+    homeClick() {
       //push => pushState
       // this.$router.push('/home')
       //replace => replaceState
-      this.$router.replace('/home')
+      this.$router.replace("/home");
     },
-    aboutClick(){
+    aboutClick() {
       // this.$router.push('/about')
       //replace => replaceState
-      this.$router.replace('/about')
-
+      this.$router.replace("/about");
     }
-  },
+  }
 };
 </script>
 

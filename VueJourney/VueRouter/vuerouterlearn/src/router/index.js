@@ -1,32 +1,52 @@
-import VueRouter from 'vue-router'
+import VueRouter from "vue-router";
 
-import Vue from 'vue'
-import Home from '../components/Home'
-import About from '../components/About'
+import Vue from "vue";
+const Home = () => import("../components/Home");
+const About = () => import("../components/About");
+const User = () => import("../components/User");
+const HomeMessage = () => import('../components/HomeMessage')
+const HomeNews = () => import('../components/HomeNews')
 //1. vue安装插件
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 //配置映射关系
 //路径和组件映射关系
-const routes =[
+const routes = [
   {
-    path:'/',
-    redirect:'/home'
+    path: "/",
+    redirect: "/home"
   },
   //一个映射一个对象
   {
-    path:'/home',
+    path: "/home",
     component: Home,
-  },{
-    path:'/about',
-    component: About,
+    children:[
+      {
+        path: '',
+        redirect: 'message'
+      },{
+        path:'message',
+        component: HomeMessage,
+      },{
+        path:'news',
+        component: HomeNews,
+      }
+    ]
+  },
+  {
+    path: "/about",
+    component: About
+  },
+  {
+    path: "/user/:userId",
+    component: User
   }
-]
+];
 //2. 实例化
 const router = new VueRouter({
   routes,
-  mode: 'history',//路由模式选择
-  linkActiveClass:'active'//router-link被选中状态
-})
+  mode: "history", //路由模式选择
+  linkActiveClass: "active" //router-link被选中状态
+});
 
-export default router
+export default router;
