@@ -16,9 +16,7 @@
 export default {
   name: "TabBarItem",
   props: {
-    path: {
-      type: String
-    }
+    path: String
   },
 
   data() {
@@ -28,9 +26,11 @@ export default {
   },
   methods: {
     itemClick() {
-      console.log("itemClick");
-      console.log(this.path);
-      this.$router.push(this.path);
+      // console.log("itemClick");
+      // console.log(this.path);
+      this.$router.replace(this.path).catch(err => {
+        err;
+      });
     }
   }
 };
