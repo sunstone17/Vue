@@ -3,6 +3,29 @@ import Vuex from "vuex";
 import { INCREMENT } from "./mutation-types";//命名导入
 Vue.use(Vuex);
 
+const moduleA = {
+  state:{
+    name: 'zhangsan'
+  },
+  actions:{},
+  mutations:{
+    updateName(state, payload){
+      state.name = payload
+    }
+  },
+  getters:{
+    fullname(state){
+      return state.name + '1111';
+    },
+    fullname2(state,getters){
+      return getters.fullname + '2222';
+    },
+    fullname3(state,getters,rootState){//rootState是根state
+      return getters.fullname2 + '2222' + rootState.counter;
+    }
+  },
+}
+
 const store = new Vuex.Store({
   state: {
     counter: 1000,
@@ -38,7 +61,23 @@ const store = new Vuex.Store({
       state.info["bigbang"] = "bangbangbang"; //不是响应式
     }
   },
-  actions: {},
+  actions: {
+    // asyncUpdateInfo(context, payload){//上下文, 异步操作需要在action中执行
+    //   setTimeout(() => {
+    //     console.log(payload)
+    //     context.commit('updateInfo');
+    //   }, 1000);
+    // }
+     asyncUpdateInfo(context, payload){//上下文, 异步操作需要在action中执行
+      return new Promise((resolve, reject)=>{
+        setTimeout(() => {
+          console.log(payload)
+          context.commit('updateInfo');
+          resolve(payload + ' promise output')
+        }, 1000);        
+      })
+    }
+  },
   getters: {
     more60Stus(state) {
       //第一个参数默认为state
@@ -56,6 +95,8 @@ const store = new Vuex.Store({
       };
     }
   },
-  modules: {}
+  modules: {
+    a: moduleA,
+  }
 });
 export default store;
