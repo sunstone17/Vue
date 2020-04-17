@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello Promise</title>
+  </head>
+
+  <body>
+    <script>
+      //完整写
+      new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve("first time");
+        }, 1000);
+      })
+        .then((res) => {
+          console.log(res, "first then");
+          return Promise.resolve(res + "first then");
+        })
+        .then((res) => {
+          console.log(res, "second then");
+          return Promise.resolve(res + "second then");
+        })
+        .then((res) => {
+          console.log(res, "third then");
+          return Promise.reject("error message");
+        })
+        .then((res) => {
+          console.log(res, "fouth then");
+        })
+        .catch((err) => {
+          console.log(err, "first error");
+        });
+
+      //简写
+      setTimeout(() => {
+        console.log("简写");
+        new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve("first time");
+          }, 1000);
+        })
+          .then((res) => {
+            console.log(res, "first then");
+            return res + "first then";
+          })
+          .then((res) => {
+            console.log(res, "second then");
+            return res + "second then";
+          })
+          .then((res) => {
+            console.log(res, "third then");
+            throw "error message";
+          })
+          .then((res) => {
+            console.log(res, "fouth then");
+          })
+          .catch((err) => {
+            console.log(err, "first error");
+          });
+      }, 1000);
+    </script>
+  </body>
+</html>

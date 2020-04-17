@@ -7,11 +7,25 @@
 
   <body>
     <script>
-      setTimeout(() => {
-        console.log('hello world')
-      }, 1000);
-
-      new Promise()
+      new Promise((resolve, reject)=>{
+        setTimeout(() => {
+          resolve('hello Vuejs')
+        }, 1000);
+      }).then(data=>{
+        console.log(data)//hello Vuejs
+      }, err=>{
+        console.log(err);
+      })
+      
+      new Promise((resolve, reject)=>{
+        setTimeout(() => {
+          reject('error msg')
+        }, 1000);
+      }).then(data=>{
+        console.log(data)
+      }, err=>{
+        console.log(err);//error msg
+      })
     </script>
   </body>
 </html>
