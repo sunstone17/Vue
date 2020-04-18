@@ -6,6 +6,7 @@
     <h2>{{$store.getters.fullname}}</h2><!--调用方式相同-->
     <h2>{{$store.getters.fullname2}}</h2>
     <h2>{{$store.getters.fullname3}}</h2>
+    <button @click="asyncUpdateName">async update module  name</button>
 
     App state--------------
     <h2>{{$store.state.counter}}</h2>
@@ -63,6 +64,9 @@ export default {
     },
     updateName(){
       this.$store.commit("updateName", 'lisi')//一样的调用方式
+    },
+    asyncUpdateName(){
+      this.$store.dispatch("asyncUpdateName", "wangwu")
     }
   }
 };
