@@ -4,7 +4,7 @@ import {baseUrl} from './const'
 export function request(config) {
   const instance = axios.create({
     baseURL:baseUrl,
-    timeout: 5000
+    timeout: 10000
   });
 
   instance.interceptors.request.use(
