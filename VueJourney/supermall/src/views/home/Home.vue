@@ -3,13 +3,17 @@
     <nav-bar class="home-nav">
       <div slot="center">购物街</div>
     </nav-bar>
-    <HomeSwiper :banners="banners"></HomeSwiper>
-    <recommend-view :recommends="recommends"></recommend-view>
-    <feature-view></feature-view>
-    <tab-control class="tab-control" :titles="['流行','新款', '精选']" @tabClick="tabClick"></tab-control>
+    <scroll class="content">
+      <home-swiper :banners="banners"></home-swiper>
+      <recommend-view :recommends="recommends"></recommend-view>
+      <feature-view></feature-view>
+      <tab-control class="tab-control" :titles="['流行','新款', '精选']" @tabClick="tabClick"></tab-control>
 
-    <good-list :goodsList="showGoods"></good-list>
-
+      <good-list :goodsList="showGoods"></good-list>
+    </scroll>
+    <ul>
+      <li v-for="item in num">sssssssssssssss{{item}}</li>
+    </ul>
   </div>
 </template>
 
@@ -20,6 +24,7 @@ import RecommendView from "./childComps/RecommendView";
 import FeatureView from "./childComps/FeatureView";
 
 //common
+import Scroll from "components/common/scroll/Scroll";
 import NavBar from "components/common/navbar/NavBar";
 import TabControl from "components/content/tabcontrol/TabControl";
 import GoodList from "components/content/goods/GoodsList";
@@ -49,7 +54,8 @@ export default {
     FeatureView,
     NavBar,
     TabControl,
-    GoodList
+    GoodList,
+    Scroll
   },
   created() {
     this.getHomeMultidata();
@@ -63,14 +69,14 @@ export default {
       console.log(index);
       switch (index) {
         case 0:
-          this.currentType = 'pop'
+          this.currentType = "pop";
           break;
         case 1:
-          this.currentType = 'new'
+          this.currentType = "new";
           break;
         case 2:
-          this.currentType = 'sell'
-          break; 
+          this.currentType = "sell";
+          break;
       }
     },
     getHomeMultidata() {
@@ -96,18 +102,19 @@ export default {
       });
     }
   },
-  computed:{
-    showGoods(){
+  computed: {
+    showGoods() {
       return this.goods[this.currentType].list;
     }
   }
-  
 };
 </script>
 
 <style scoped>
 #home {
   padding-top: 44px;
+  height: 100vh; /* vh: viewpoint heigh: 可视窗口高度 */
+  /* position: relative; */
 }
 .home-nav {
   background-color: var(--color-tint);
@@ -123,5 +130,18 @@ export default {
   position: sticky;
   top: 44px;
   z-index: 9;
+}
+/* .content{
+  height: 300px;
+  overflow: hidden;
+} */
+/* 使用定位，来确定中间这部分的高度*/
+.content{
+  overflow: hidden;
+  position: absolute;
+  top: 44px;
+  bottom: 49px;
+  left: 0;
+  right: 0;
 }
 </style>
