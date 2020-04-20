@@ -3,7 +3,14 @@
     <nav-bar class="home-nav">
       <div slot="center">购物街</div>
     </nav-bar>
-    <scroll class="content">
+    <scroll
+      class="content"
+      ref="scroll"
+      :probe-type="3"
+      @scroll="contentScroll"
+      :pull-up-load="true"
+      @pullingUp="loadMore"
+    >
       <home-swiper :banners="banners"></home-swiper>
       <recommend-view :recommends="recommends"></recommend-view>
       <feature-view></feature-view>
@@ -11,9 +18,8 @@
 
       <good-list :goodsList="showGoods"></good-list>
     </scroll>
-    <ul>
-      <li v-for="item in num">sssssssssssssss{{item}}</li>
-    </ul>
+    <back-top @click.native="backClick" v-show="isShowBackTop"></back-top>
+    <ul></ul>
   </div>
 </template>
 
@@ -28,6 +34,7 @@ import Scroll from "components/common/scroll/Scroll";
 import NavBar from "components/common/navbar/NavBar";
 import TabControl from "components/content/tabcontrol/TabControl";
 import GoodList from "components/content/goods/GoodsList";
+import BackTop from "components/content/backtop/BackTop";
 //js
 import { getHomeMultidata, getHomeGoods } from "network/home.js";
 
@@ -45,7 +52,7 @@ export default {
         sell: { page: 0, list: [] }
       },
       currentType: "pop",
-      num: 50
+      isShowBackTop: false
     };
   },
   components: {
@@ -55,7 +62,8 @@ export default {
     NavBar,
     TabControl,
     GoodList,
-    Scroll
+    Scroll,
+    BackTop
   },
   created() {
     this.getHomeMultidata();
@@ -100,6 +108,17 @@ export default {
         //页码++
         this.goods[type].page += 1;
       });
+    },
+    backClick() {
+      //通过ref获取到scroll组件，获取到scroll对象
+      this.$refs.scroll.scrollTo(0, 0);
+    },
+    contentScroll(position) {
+      this.isShowBackTop = -position.y > 1000;
+    },
+    loadMore() {
+      this.getHomeGoods(this.currentType);
+      this.$refs.scroll.finishPullUp(); //本次下拉加载完成
     }
   },
   computed: {
@@ -136,7 +155,7 @@ export default {
   overflow: hidden;
 } */
 /* 使用定位，来确定中间这部分的高度*/
-.content{
+.content {
   overflow: hidden;
   position: absolute;
   top: 44px;

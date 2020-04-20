@@ -25,7 +25,7 @@ export default {
     });
 
     this.scroll.on("scroll", (postion)=>{
-      // console.log(postion)
+       console.log(postion)
     })
 
     this.scroll.on("pullingUp", ()=>{
