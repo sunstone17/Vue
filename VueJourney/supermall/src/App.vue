@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <keep-alive>
+      <router-view></router-view> 
+      <!-- 这里router对应的组件可以占位 -->
+    </keep-alive>
     <main-tab-bar/>
   </div>
 </template>
