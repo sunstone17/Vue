@@ -1,14 +1,17 @@
 <template>
   <div id="detail">
-    <detail-nav-bar class="detail-nav"></detail-nav-bar>
-    <scroll class="content" ref="scroll">
+    <detail-nav-bar class="detail-nav" @titleClick ="navTitleClick" ref="navBar"></detail-nav-bar>
+    <scroll class="content" 
+      ref="scroll" 
+      :probeType = 3
+      @scroll="detailContentScroll">
       <detail-swiper :top-images="topImages"></detail-swiper>
       <detail-base-info :goods="goods" />
       <detail-shop-info :shop="shop" />
-      <detail-goods-info :detail-info="detailInfo" @imageLoad="goodsInfoImageLoad" />
-      <detail-param-info :param-info="goodsParam" />
-      <detail-comment-info :comment-info="commentInfo" />
-      <goods-list :goods-list="recommends" />
+      <detail-goods-info :detail-info="detailInfo" @imageLoad="goodsInfoImageLoad" ref="goodsInfoCpn" />
+      <detail-param-info :param-info="goodsParam" ref = "paramInfoCpn"/>
+      <detail-comment-info :comment-info="commentInfo" ref = "commentInfoCpn"/>
+      <goods-list :goods-list="recommends" ref="recommendsCpn" />
     </scroll>
   </div>
 </template>
@@ -50,13 +53,14 @@ export default {
       goodsParam: {},
       commentInfo: {},
       recommends: [],
+      themeTopYs: []
     };
   },
   created() {
     // console.log("detail created")
     this.iid = this.$route.params.iid;
     getDetail(this.iid).then(res => {
-      console.log(res);
+      // console.log(res);
       //1. 获取数据
       const data = res.result;
 
@@ -91,6 +95,13 @@ export default {
       getRecommend().then(res => {
         this.recommends = res.data.list;
       });
+
+      // this.$nextTick(()=>{
+      //  DOM已经被渲染出来
+      //   //这里的DOM还是没有包含图片
+      //   this.setThemeTopYs();
+      //   console.log(this.themeTopYs)
+      // })
     });
   },
   mounted() {
@@ -98,14 +109,31 @@ export default {
   methods: {
     goodsInfoImageLoad() {
       // this.$refs.scroll.refresh();
-      console.log("banner refresh")
+      // console.log("banner refresh")
       this.newRefresh();
+      this.setThemeTopYs();
+      // console.log(this.$refs.paramInfoCpn.$el.offsetTop)
+    },
+    setThemeTopYs(){
+      this.themeTopYs = [];
+      this.themeTopYs.push(0)
+      this.themeTopYs.push(this.$refs.paramInfoCpn.$el.offsetTop)
+      this.themeTopYs.push(this.$refs.commentInfoCpn.$el.offsetTop)
+      this.themeTopYs.push(this.$refs.recommendsCpn.$el.offsetTop)
+    },
+    detailContentScroll(position){
+      console.log(position);
+    },
+    navTitleClick(index){
+      // console.log(index);
+      this.$refs.scroll.scrollTo(0, -this.themeTopYs[index], 200);
     }
   },
+  
   destroyed() {
     //销毁刷新
     this.$bus.$off("itemImageLoad", this.goodListItemImageListener);
-    console.log("detail destroyed")
+    // console.log("detail destroyed")
   },
   components: {
     DetailNavBar,

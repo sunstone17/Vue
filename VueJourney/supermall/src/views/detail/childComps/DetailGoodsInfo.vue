@@ -30,7 +30,7 @@ export default {
     //图片加载次数，保证只发送一次imageLoad
     imgLoad() {
       if(++this.counter === this.imagesLength){
-        console.log("goods info imageLoad")
+        // console.log("goods info imageLoad")
         this.$emit("imageLoad")
       }
     }

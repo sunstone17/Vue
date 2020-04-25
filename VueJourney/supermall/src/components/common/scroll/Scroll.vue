@@ -58,7 +58,7 @@ export default {
     },
     refresh() {
       //this.scroll对象可能没有初始化好，初始化时在mounted中做的，外部就调用了
-      console.log("refresh")
+      // console.log("refresh")
       this.scroll && this.scroll.refresh();
     },
     getScrollY() {
