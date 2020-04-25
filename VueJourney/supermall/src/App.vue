@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <keep-alive>
+    <keep-alive exclude="Detail">
       <router-view></router-view> 
       <!-- 这里router对应的组件可以占位 -->
     </keep-alive>

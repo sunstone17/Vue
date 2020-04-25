@@ -3,10 +3,13 @@
     <nav-bar class="home-nav">
       <div slot="center">购物街</div>
     </nav-bar>
-    <tab-control  
-        :titles="['流行','新款', '精选']" 
-        @tabClick="tabClick"
-        ref="tabControlHidden" class="tab-control" v-show="isTabFixed"></tab-control>
+    <tab-control
+      :titles="['流行','新款', '精选']"
+      @tabClick="tabClick"
+      ref="tabControlHidden"
+      class="tab-control"
+      v-show="isTabFixed"
+    ></tab-control>
 
     <scroll
       class="content"
@@ -19,14 +22,11 @@
       <home-swiper :banners="banners" @swiperImageLoad="swiperImageLoad"></home-swiper>
       <recommend-view :recommends="recommends"></recommend-view>
       <feature-view></feature-view>
-      <tab-control  
-        :titles="['流行','新款', '精选']" 
-        @tabClick="tabClick"
-        ref="tabControlShow"></tab-control>
+      <tab-control :titles="['流行','新款', '精选']" @tabClick="tabClick" ref="tabControlShow"></tab-control>
 
       <good-list :goodsList="showGoods"></good-list>
     </scroll>
-    <back-top @click.native="backClick" v-show="isShowBackTop"></back-top>
+    <back-top @click.native="backTopClick" v-show="isShowBackTop"></back-top>
     <ul></ul>
   </div>
 </template>
@@ -45,7 +45,8 @@ import GoodList from "components/content/goods/GoodsList";
 import BackTop from "components/content/backtop/BackTop";
 //js
 import { getHomeMultidata, getHomeGoods } from "network/home.js";
-import {debounce } from "common/utils"
+import { debounce } from "common/utils";
+import { itemListenerMixin } from "common/mixin";
 
 export default {
   name: "Home",
@@ -77,8 +78,9 @@ export default {
     Scroll,
     BackTop
   },
-  destroyed(){
-    console.log("home destoryed")
+  mixins:[itemListenerMixin],
+  destroyed() {
+    console.log("home destoryed");
   },
   created() {
     this.getHomeMultidata();
@@ -88,28 +90,39 @@ export default {
   },
   mounted() {
     //监听事件图片加载完成
-    const refresh = debounce(this.$refs.scroll.refresh ,50);
-    this.$bus.$on("itemImageLoad", () => {
-      //图片加载不完，scroll计算高度时，不会算入未加载的图片的高度
-      // console.log("------------")
-      // this.$refs.scroll.refresh();
-      refresh();
-    });
+    // const refresh = debounce(this.$refs.scroll.refresh, 50);
+
+    // //保存监听函数
+    // this.homeGoodListItemImageListener = () => {
+    //   //图片加载不完，scroll计算高度时，不会算入未加载的图片的高度
+    //   // console.log("------------")
+    //   // this.$refs.scroll.refresh();
+    //   refresh();
+    // };
+    // this.$bus.$on("itemImageLoad", this.homeGoodListItemImageListener);
 
     //2.监听tabControl的offsetTop
     //所有的组件对象都有$el属性，可以拿到当前组件
     // 这里拿的值是不对的，图片还没有加载
-    console.log(this.$refs.tabControlShow.$el)
+    console.log(this.$refs.tabControlShow.$el);
   },
-  activated(){
+  activated() {
+    //恢复监听
+    console.log("恢复监听")
+    this.$bus.$on("itemImageLoad", this.goodListItemImageListener);
     //回来的时候自动到离开的位置
+    // console.log("activated", this.homeSaveY);
     this.$refs.scroll.scrollTo(0, this.homeSaveY, 0);
     //刷新一下，防止scroll出现问题
     this.$refs.scroll.refresh();
   },
-  deactivated(){
+  deactivated() {
+    //保存Y值
     this.homeSaveY = this.$refs.scroll.getScrollY();
-    console.log( this.homeSaveY);
+    //取消监听goodsItem imageLoad
+    console.log("取消监听")
+    this.$bus.$off("itemImageLoad", this.goodListItemImageListener);
+    // console.log("deactived", this.homeSaveY);
   },
   methods: {
     //子组件回调
@@ -126,8 +139,8 @@ export default {
           this.currentType = "sell";
           break;
       }
-      this.$refs.tabControlShow.currentIndex = index
-      this.$refs.tabControlHidden.currentIndex = index
+      this.$refs.tabControlShow.currentIndex = index;
+      this.$refs.tabControlHidden.currentIndex = index;
     },
     getHomeMultidata() {
       getHomeMultidata()
@@ -152,20 +165,20 @@ export default {
         this.$refs.scroll.finishPullUp(); //本次下拉加载完成
       });
     },
-    backClick() {
+    backTopClick() {
       //通过ref获取到scroll组件，获取到scroll对象
       this.$refs.scroll.scrollTo(0, 0);
     },
     contentScroll(position) {
-      this.isShowBackTop = (-position.y) > 1000;
-      this.isTabFixed = (-position.y) > this.tabOffsetTop
+      this.isShowBackTop = -position.y > 1000;
+      this.isTabFixed = -position.y > this.tabOffsetTop;
     },
     loadMore() {
       this.getHomeGoods(this.currentType);
     },
-    swiperImageLoad(){
+    swiperImageLoad() {
       //监听轮播图片加载，得出来正确的高度
-      console.log(this.$refs.tabControlShow.$el.offsetTop)
+      console.log(this.$refs.tabControlShow.$el.offsetTop);
       this.tabOffsetTop = this.$refs.tabControlShow.$el.offsetTop;
     }
   },
@@ -208,7 +221,7 @@ export default {
   right: 0;
 }
 
-.tab-control{
+.tab-control {
   position: relative;
   z-index: 9;
 }
