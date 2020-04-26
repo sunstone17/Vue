@@ -9,6 +9,7 @@ export default {
       context.commit(ADD_COUNTER, existProduct)
     }else{
       payload.count = 1;
+      payload.checked = true;
       context.commit(ADD_TO_CART, payload)
     }
   }
