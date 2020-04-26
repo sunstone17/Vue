@@ -42,11 +42,10 @@ import Scroll from "components/common/scroll/Scroll";
 import NavBar from "components/common/navbar/NavBar";
 import TabControl from "components/content/tabcontrol/TabControl";
 import GoodList from "components/content/goods/GoodsList";
-import BackTop from "components/content/backtop/BackTop";
 //js
 import { getHomeMultidata, getHomeGoods } from "network/home.js";
 import { debounce } from "common/utils";
-import { itemListenerMixin } from "common/mixin";
+import { itemListenerMixin, backTopMixin } from "common/mixin";
 
 export default {
   name: "Home",
@@ -62,7 +61,6 @@ export default {
         sell: { page: 0, list: [] }
       },
       currentType: "pop",
-      isShowBackTop: false,
       tabOffsetTop: 0,
       isTabFixed: false,
       homeSaveY: 0,
@@ -76,9 +74,8 @@ export default {
     TabControl,
     GoodList,
     Scroll,
-    BackTop
   },
-  mixins:[itemListenerMixin],
+  mixins:[itemListenerMixin, backTopMixin],
   destroyed() {
     console.log("home destoryed");
   },
@@ -165,12 +162,9 @@ export default {
         this.$refs.scroll.finishPullUp(); //本次下拉加载完成
       });
     },
-    backTopClick() {
-      //通过ref获取到scroll组件，获取到scroll对象
-      this.$refs.scroll.scrollTo(0, 0);
-    },
     contentScroll(position) {
-      this.isShowBackTop = -position.y > 1000;
+      // this.isShowBackTop = -position.y > 1000;
+      this.listenShowBackTop(position);
       this.isTabFixed = -position.y > this.tabOffsetTop;
     },
     loadMore() {

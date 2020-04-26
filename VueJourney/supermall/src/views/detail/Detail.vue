@@ -1,8 +1,8 @@
 <template>
   <div id="detail">
-    <detail-nav-bar class="detail-nav" @titleClick ="navTitleClick" ref="navBar"></detail-nav-bar>
-    <scroll class="content" 
-      ref="scroll" 
+    <detail-nav-bar class="detail-nav" @titleClick ="navTitleClick" ref="navBarCpn"></detail-nav-bar>
+    <scroll class="content"
+      ref="scroll"
       :probeType = 3
       @scroll="detailContentScroll">
       <detail-swiper :top-images="topImages"></detail-swiper>
@@ -13,6 +13,8 @@
       <detail-comment-info :comment-info="commentInfo" ref = "commentInfoCpn"/>
       <goods-list :goods-list="recommends" ref="recommendsCpn" />
     </scroll>
+    <back-top @click.native="backTopClick" v-show="isShowBackTop"></back-top>
+    <detail-bottom-bar @addToCart="addToCart"></detail-bottom-bar>
   </div>
 </template>
 
@@ -29,7 +31,7 @@ import Scroll from "components/common/scroll/Scroll";
 import GoodsList from "components/content/goods/GoodsList";
 
 import { debounce } from "common/utils";
-import { itemListenerMixin } from "common/mixin";
+import { itemListenerMixin, backTopMixin } from "common/mixin";
 
 //child
 import DetailNavBar from "./childComps/DetailNavBar";
@@ -39,10 +41,11 @@ import DetailShopInfo from "./childComps/DetailShopInfo";
 import DetailGoodsInfo from "./childComps/DetailGoodsInfo";
 import DetailParamInfo from "./childComps/DetailParamInfo";
 import DetailCommentInfo from "./childComps/DetailCommentInfo";
+import DetailBottomBar from "./childComps/DetailBottomBar";
 
 export default {
   name: "Detail",
-  mixins:[itemListenerMixin],
+  mixins:[itemListenerMixin, backTopMixin],
   data() {
     return {
       iid: null,
@@ -122,14 +125,38 @@ export default {
       this.themeTopYs.push(this.$refs.recommendsCpn.$el.offsetTop)
     },
     detailContentScroll(position){
-      console.log(position);
+      // console.log(position);
+      var posY = -position.y;
+      this.listenShowBackTop(position);
+      // console.log(this.themeTopYs)
+      // console.log(position)
+      if(posY >= this.$refs.recommendsCpn.$el.offsetTop){
+        this.$refs.navBarCpn.currentIndex = 3
+      }else if(posY >= this.$refs.commentInfoCpn.$el.offsetTop){
+        this.$refs.navBarCpn.currentIndex = 2
+      }else if(posY >= this.$refs.paramInfoCpn.$el.offsetTop){
+        this.$refs.navBarCpn.currentIndex = 1
+      }else{
+        this.$refs.navBarCpn.currentIndex = 0
+      }
     },
     navTitleClick(index){
       // console.log(index);
       this.$refs.scroll.scrollTo(0, -this.themeTopYs[index], 200);
+    },
+    addToCart(){
+      const product = {
+        image: this.topImages[0],
+        title: this.goods.title,
+        desc: this.goods.desc,
+        price: this.goods.realPrice,
+        iid: this.iid,
+      }
+
+      this.$store.dispatch("addCart", product);
     }
   },
-  
+
   destroyed() {
     //销毁刷新
     this.$bus.$off("itemImageLoad", this.goodListItemImageListener);
@@ -144,7 +171,8 @@ export default {
     DetailGoodsInfo,
     DetailParamInfo,
     DetailCommentInfo,
-    GoodsList
+    GoodsList,
+    DetailBottomBar
   }
 };
 </script>
@@ -165,7 +193,7 @@ export default {
   overflow: hidden;
   position: absolute;
   top: 44px;
-  bottom: 0;
+  bottom: 49px;
   left: 0;
   right: 0;
 }
