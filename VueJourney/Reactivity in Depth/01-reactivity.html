@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./js/vue.min.js"></script>
+</head>
+<body>
+  <div id='app'>
+    {{message}}
+  </div>
+
+  <script>
+    const obj = {
+      name: 'coderwhy',
+      message: 'hhhhhh',
+    }
+
+    Object.keys(obj).forEach(key => {
+      let value = obj[key];
+      Object.defineProperty(obj, key, {
+        set(newValue){
+          console.log('监听' + key + '改变')
+          value = newValue;
+        },
+        get(){
+          console.log('监听' + key + '获取')
+          return value
+        }
+
+      })
+    })
+
+    // 发布订阅者模式
+    class Dep{
+      constructor(){
+        this.subscribes = []
+      }
+      addSub(watcher) {
+        this.subscribes.push(watcher)
+      }
+      notify(){
+        this.subscribes.forEach(item => {
+          item.update()
+        })
+      }
+    }
+
+    class Watcher{
+      constructor(name){
+        this.name = name
+      }
+      update() {
+        console.log(this.name + '发生了update')
+      }
+    }
+
+    const dep = new Dep();
+    let w1 = new Watcher('zhang san')
+    dep.addSub(w1)
+    let w2 = new Watcher('lisi ')
+    dep.addSub(w2)
+    let w3 = new Watcher('wang wu ')
+    dep.addSub(w3)
+    dep.notify()
+  </script>
+  
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        message: '哈哈哈哈'
+      }
+    })
+  </script>
+</body>
+</html>
