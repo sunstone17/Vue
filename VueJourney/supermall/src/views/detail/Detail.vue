@@ -43,6 +43,8 @@ import DetailParamInfo from "./childComps/DetailParamInfo";
 import DetailCommentInfo from "./childComps/DetailCommentInfo";
 import DetailBottomBar from "./childComps/DetailBottomBar";
 
+import {mapActions} from "vuex"
+
 export default {
   name: "Detail",
   mixins:[itemListenerMixin, backTopMixin],
@@ -110,6 +112,7 @@ export default {
   mounted() {
   },
   methods: {
+    ...mapActions(["addCart"]),
     goodsInfoImageLoad() {
       // this.$refs.scroll.refresh();
       // console.log("banner refresh")
@@ -148,12 +151,17 @@ export default {
       const product = {
         image: this.topImages[0],
         title: this.goods.title,
-        desc: this.goods.desc,
+        desc: this.goods.desc, 
         price: this.goods.realPrice,
         iid: this.iid,
       }
 
-      this.$store.dispatch("addCart", product);
+      // this.$store.dispatch("addCart", product).then(res => {
+      //   console.log(res)
+      // });
+      this.addCart(product).then(res => {
+        this.$toast.show(res, 1500)
+      })
     }
   },
 
